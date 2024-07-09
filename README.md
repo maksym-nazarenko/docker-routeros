@@ -1,4 +1,4 @@
-Mikrotik RouterOS in container
+MikroTik RouterOS in container
 ==============================
 
 The goal of this repository is to provide [RouterOS](https://mikrotik.com/software) installation to be available inside a Docker container.
@@ -35,6 +35,6 @@ The default version to build is defined by `ROUTEROS_VERSION` [argument in Docke
 
 ## Release process
 
-Releases are fully automated and based on `Git tags`.
+Releases are fully automated and based on [Git releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases).
 
-Once new `pep440` tag (without `v` prefix) is created, new image is built with RouterOS version equals to the tag value.
+Once release with [pep440](https://peps.python.org/pep-0440/#final-releases) tag (no `"v"` prefix) is created, new image is built with RouterOS version equals to the tag value.
