@@ -1,0 +1,40 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 */4 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  routeros:
+    name: Build latest RouterOS version image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4.1.7
+        with:
+         fetch-depth: 0
+
+      - name: Check latest RouterOS release
+        id: routeros_version
+        run: echo 'routeros_version='$(./bin/get-latest-routeros-version.sh) >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        id: local_tag
+        run: echo 'local_tag='$(git tag --list "${{ steps.routeros_version.outputs.routeros_version }}") >> $GITHUB_OUTPUT
+
+      - name: Build image
+        if: steps.local_tag.outputs.local_tag == ''
+        uses: docker/build-push-action@v6
+        with:
+          push: false
+          build-args: |
+            ROUTEROS_VERSION=${{ steps.routeros_version.outputs.routeros_version }}
+          tags: test
+
+      - name: Create release
+        if: steps.local_tag.outputs.local_tag == ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: ./bin/create-release.sh ${{ steps.routeros_version.outputs.routeros_version }}
