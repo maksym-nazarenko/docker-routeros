@@ -13,10 +13,16 @@ if [ "$tag" != "" ]; then
     exit 0
 fi
 
+# by default, use GNU sed options
+sed_inplace="-i"
+if [[ $OSTYPE == "darwin"* ]]; then
+    sed_inplace="-i .bak"
+fi
+
 
 echo "Updating version in Dockerfile"
 
-sed -i '.bak' -e 's/^ARG ROUTEROS_VERSION=.*/ARG ROUTEROS_VERSION='${routeros_version}'/' ${dockerfile}
+sed $sed_inplace -e 's/^ARG ROUTEROS_VERSION=.*/ARG ROUTEROS_VERSION='${routeros_version}'/' ${dockerfile}
 git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git add ${dockerfile}
