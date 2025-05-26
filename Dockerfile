@@ -2,7 +2,7 @@ FROM alpine:3.19 AS builder
 
 RUN apk add -U curl
 
-ARG ROUTEROS_VERSION=7.19
+ARG ROUTEROS_VERSION=7.19.1
 
 RUN curl -o data.img.zip https://download.mikrotik.com/routeros/${ROUTEROS_VERSION}/chr-${ROUTEROS_VERSION}.img.zip \
     && unzip -p data.img.zip > /data.img
