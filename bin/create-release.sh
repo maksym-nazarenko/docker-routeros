@@ -34,4 +34,4 @@ git push origin main
 git push origin ${routeros_version}
 
 echo "Creating new release"
-gh release create ${routeros_version} --prerelease --verify-tag --title "RouterOS ${routeros_version}"
+gh release create ${routeros_version} --latest --verify-tag --title "RouterOS ${routeros_version}"
