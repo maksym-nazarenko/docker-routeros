@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -13,6 +13,9 @@ if [ "$tag" != "" ]; then
     exit 0
 fi
 
+# configure `gh` as credentials helper for `git`, so we can push code from this script
+gh auth setup-git
+
 # by default, use GNU sed options
 sed_inplace="-i"
 if [[ $OSTYPE == "darwin"* ]]; then
@@ -23,8 +26,6 @@ fi
 echo "Updating version in Dockerfile"
 
 sed $sed_inplace -e 's/^ARG ROUTEROS_VERSION=.*/ARG ROUTEROS_VERSION='${routeros_version}'/' ${dockerfile}
-git config user.name "github-actions[bot]"
-git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
 git add ${dockerfile}
 git commit -m "update RouterOS version to ${routeros_version}"
