@@ -3,9 +3,6 @@ on:
   schedule:
     - cron: "15 */4 * * *"
 
-permissions:
-  contents: write
-
 jobs:
   routeros:
     name: Build latest RouterOS version image
@@ -36,5 +33,5 @@ jobs:
       - name: Create release
         if: steps.local_tag.outputs.local_tag == ''
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: ./bin/create-release.sh ${{ steps.routeros_version.outputs.routeros_version }}
