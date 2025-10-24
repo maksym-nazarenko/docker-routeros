@@ -13,6 +13,8 @@ if [ "$tag" != "" ]; then
     exit 0
 fi
 
+git config user.name "github-actions[bot]"
+git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 # configure `gh` as credentials helper for `git`, so we can push code from this script
 gh auth setup-git
 
