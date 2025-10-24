@@ -1,3 +1,5 @@
+name: Check latest RouterOS version
+
 on:
   workflow_dispatch:
   schedule:
