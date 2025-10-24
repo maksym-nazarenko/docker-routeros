@@ -13,7 +13,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4.1.7
         with:
-         fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
+          fetch-depth: 0
 
       - name: Check latest RouterOS release
         id: routeros_version
